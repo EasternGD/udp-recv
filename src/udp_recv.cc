@@ -6,7 +6,7 @@ int main(int argc, char* argv[])
     uint8_t buffer[PACKETSIZE];
     int frame_len;
 
-    TRY((sd = socket(AF_INET, SOCK_RAW, IPPROTO_UDP)));
+    TRY((sd = socket(PF_INET, SOCK_RAW, IPPROTO_UDP)));
 
     while (1) {
         TRY(frame_len = recvfrom(sd, buffer, PACKETSIZE, 0, NULL, NULL));
