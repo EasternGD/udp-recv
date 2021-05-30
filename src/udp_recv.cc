@@ -6,7 +6,7 @@ int main(int argc, char* argv[])
     uint8_t buffer[PACKETSIZE];
     int frame_len;
 
-    TRY((sd = socket(AF_INET, SOCK_RAW, IPPROTO_TCP)));
+    TRY((sd = socket(AF_INET, SOCK_RAW, IPPROTO_UDP)));
 
     while (1) {
         TRY(frame_len = recvfrom(sd, buffer, PACKETSIZE, 0, NULL, NULL));
@@ -15,9 +15,6 @@ int main(int argc, char* argv[])
         struct udphdr* udp_header = (struct udphdr*)(buffer + ETH_HDRLEN + IP4_HDRLEN);
         uint8_t *payload = (buffer + ETH_HDRLEN + IP4_HDRLEN +  UDP_HDRLEN);
         int sd;
-
-        if (ip_header->ip_p != IPPROTO_UDP)
-            continue;
 
         Hexdump(buffer, frame_len);
     }
